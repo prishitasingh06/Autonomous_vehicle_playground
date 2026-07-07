@@ -12,11 +12,24 @@ class Path:
 
 
     def get_closest_point(self, vehicle_x, vehicle_y):
-        # Calculate distance from vehicle to every path point: d = sqrt((x2-x1)^2 + (y2-y1)^2)
-        distance = np.sqrt((self.x - vehicle_x)**2 + (self.y - vehicle_y)**2)
 
-        # Find index of the closest path point
+        # Calculate distance from vehicle to every path point
+        distance = np.sqrt((self.x - vehicle_x)**2 +(self.y - vehicle_y)**2)
+
+
+        # Find closest path index
         index = np.argmin(distance)
 
-        # Return closest point coordinates
-        return self.x[index], self.y[index]
+
+        # Look ahead along the path
+        target_index = index + 20
+
+
+        # Prevent going outside path
+        if target_index >= len(self.x):
+            target_index = len(self.x) - 1
+
+
+        # Return future target point
+        return (self.x[target_index],self.y[target_index]
+        )

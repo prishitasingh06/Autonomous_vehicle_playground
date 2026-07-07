@@ -61,8 +61,7 @@ class MPCController:
         for k in range(self.N):
 
             # Penalize distance from desired reference position
-            cost += (x[k]-reference[0])**2 + (y[k]-reference[1])**2
-
+            cost += ((x[k]-reference[0])**2 + (y[k]-reference[1])**2+0.5*(v[k]-5)**2)
             # Penalize large steering and acceleration inputs
             cost += 0.1*steering[k]**2 + 0.1*acceleration[k]**2
 
