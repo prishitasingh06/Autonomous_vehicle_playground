@@ -4,50 +4,84 @@ from vehicle import Vehicle
 from simulation import Simulation
 from visualization import Visualizer
 
+from path import Path
+from controller import PurePursuitController
+
 
 
 def main():
 
-    # Create vehicle
-    car = Vehicle()
+    car = Vehicle(
+        x=0,
+        y=0,
+        velocity=2
+    )
 
 
-    # Create simulator
+    path = Path()
+
+
+    controller = PurePursuitController()
+
+
     sim = Simulation(
-        vehicle=car,
+        car,
         dt=0.05,
-        duration=20
+        duration=25
     )
 
 
-    # Run simulation
-    sim.run(
-        acceleration=0.5,
-        steering=0.15
-    )
+    steps = int(sim.duration/sim.dt)
+
+
+    for i in range(steps):
+
+        steering = controller.compute_steering(
+            car,
+            path
+        )
+
+
+        car.update(
+            acceleration=0,
+            steering=steering,
+            dt=sim.dt
+        )
+
+
+        sim.x_history.append(car.x)
+        sim.y_history.append(car.y)
+        sim.yaw_history.append(car.yaw)
+        sim.velocity_history.append(car.velocity)
+
 
 
     visualizer = Visualizer()
 
 
-    # Plot trajectory
+    # Desired path
+
+    px, py = path.get_points()
+
+    visualizer.ax.plot(
+        px,
+        py,
+        "--",
+        label="Reference Path"
+    )
+
+
+    # Vehicle trajectory
 
     visualizer.ax.plot(
         sim.x_history,
         sim.y_history,
-        "--",
-        color="gray"
+        color="blue",
+        label="Vehicle Path"
     )
 
 
-    # Draw vehicle positions
-    for i in range(0, len(sim.x_history), 20):
-
-        car.x = sim.x_history[i]
-        car.y = sim.y_history[i]
-        car.yaw = sim.yaw_history[i]
-
-        visualizer.draw_vehicle(car)
+    visualizer.ax.legend()
 
     plt.show()
 

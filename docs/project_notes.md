@@ -229,3 +229,37 @@ A rotation matrix converts vehicle coordinates into the global frame.
 [x] Simulation loop
 [x] Trajectory plotting
 [x] Vehicle visualization
+
+# Phase 3: Path Following
+
+## Objective
+
+Create an autonomous controller that allows the vehicle to follow a reference path.
+
+## Controller
+Implemented Pure Pursuit Controller.
+
+## Inputs
+
+Vehicle state:
+
+- position
+- heading
+
+Reference path:
+
+- x coordinates
+- y coordinates
+
+
+## Output
+
+Steering angle command.
+
+
+## Completed
+
+[x] Vehicle model
+[x] Visualization
+[x] Reference path
+[x] Autonomous steering
