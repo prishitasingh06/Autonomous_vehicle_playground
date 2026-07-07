@@ -11,25 +11,35 @@ class Path:
         self.y = 5 * np.sin(self.x / 10)
 
 
+
     def get_closest_point(self, vehicle_x, vehicle_y):
 
-        # Calculate distance from vehicle to every path point
-        distance = np.sqrt((self.x - vehicle_x)**2 +(self.y - vehicle_y)**2)
+        distance = np.sqrt(
+            (self.x - vehicle_x)**2 +
+            (self.y - vehicle_y)**2
+        )
 
-
-        # Find closest path index
         index = np.argmin(distance)
 
 
-        # Look ahead along the path
         target_index = index + 20
 
 
-        # Prevent going outside path
         if target_index >= len(self.x):
-            target_index = len(self.x) - 1
+            target_index = len(self.x)-1
 
 
-        # Return future target point
-        return (self.x[target_index],self.y[target_index]
+        return (
+            self.x[target_index],
+            self.y[target_index]
         )
+
+
+    def is_finished(self, vehicle_x):
+
+        # Check if vehicle reached end of path
+
+        if vehicle_x >= self.x[-1] - 2:
+            return True
+
+        return False
