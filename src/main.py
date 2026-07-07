@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 
 from vehicle import Vehicle
 from simulation import Simulation
+from visualization import Visualizer
 
 
 
@@ -26,25 +27,27 @@ def main():
     )
 
 
-    # Get data
-    results = sim.get_results()
+    visualizer = Visualizer()
 
 
     # Plot trajectory
-    plt.figure(figsize=(8,6))
 
-    plt.plot(
-        results["x"],
-        results["y"],
-        linewidth=3
+    visualizer.ax.plot(
+        sim.x_history,
+        sim.y_history,
+        "--",
+        color="gray"
     )
 
-    plt.xlabel("X position (m)")
-    plt.ylabel("Y position (m)")
-    plt.title("Kinematic Bicycle Vehicle Trajectory")
 
-    plt.axis("equal")
-    plt.grid()
+    # Draw vehicle positions
+    for i in range(0, len(sim.x_history), 20):
+
+        car.x = sim.x_history[i]
+        car.y = sim.y_history[i]
+        car.yaw = sim.yaw_history[i]
+
+        visualizer.draw_vehicle(car)
 
     plt.show()
 

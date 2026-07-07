@@ -188,3 +188,44 @@ main.py
     |-- Creates plots
 
 cmd: python3 main.py  
+
+# Phase 2: Trajectory Visualization
+
+## Objective
+Create a visualization system to display the vehicle's motion and orientation.
+
+## Motivation
+Visualization is necessary for debugging autonomous vehicle algorithms.
+
+Engineers need to observe:
+
+- Vehicle position
+- Heading direction
+- Path tracking behavior
+
+## Implementation
+Created: visualization.py
+
+Responsibilities:
+
+- Convert vehicle coordinates to world coordinates
+- Draw vehicle geometry
+- Display heading direction
+
+
+## Coordinate Transformation
+
+The vehicle has its own coordinate frame.
+Vehicle frame:
+
+- Forward direction
+- Left/right direction
+
+
+A rotation matrix converts vehicle coordinates into the global frame.
+
+## Completed
+[x] Vehicle dynamics model
+[x] Simulation loop
+[x] Trajectory plotting
+[x] Vehicle visualization
