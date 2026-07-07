@@ -1,0 +1,7 @@
+numpy
+matplotlib
+scipy
+#run python3 -m venv .venv
+# every time you open a terminal: source .venv/bin/activate
+# run pip install -r requirements.txt
+# once done you can use this cmd in src folder: python3 main.py
