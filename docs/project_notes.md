@@ -263,3 +263,5 @@ Steering angle command.
 [x] Visualization
 [x] Reference path
 [x] Autonomous steering
+
+ cmd: pip install casadi osqp
