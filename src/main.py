@@ -1,19 +1,19 @@
 import matplotlib.pyplot as plt
 
 from vehicle import Vehicle
-from simulation import Simulation
-from visualization import Visualizer
-
 from path import Path
-from controller import PurePursuitController
+from mpc_controller import MPCController
+from mpc_simulation import MPCSimulation
 
 
 
 def main():
 
+
     car = Vehicle(
         x=0,
         y=0,
+        yaw=0,
         velocity=2
     )
 
@@ -21,67 +21,47 @@ def main():
     path = Path()
 
 
-    controller = PurePursuitController()
+    controller = MPCController()
 
 
-    sim = Simulation(
+    simulation = MPCSimulation(
         car,
-        dt=0.05,
-        duration=25
+        controller,
+        path
     )
 
 
-    steps = int(sim.duration/sim.dt)
+    simulation.run(
+        steps=100
+    )
 
 
-    for i in range(steps):
-
-        steering = controller.compute_steering(
-            car,
-            path
-        )
+    plt.figure(figsize=(8,6))
 
 
-        car.update(
-            acceleration=0,
-            steering=steering,
-            dt=sim.dt
-        )
-
-
-        sim.x_history.append(car.x)
-        sim.y_history.append(car.y)
-        sim.yaw_history.append(car.yaw)
-        sim.velocity_history.append(car.velocity)
-
-
-
-    visualizer = Visualizer()
-
-
-    # Desired path
-
-    px, py = path.get_points()
-
-    visualizer.ax.plot(
-        px,
-        py,
+    plt.plot(
+        path.x,
+        path.y,
         "--",
         label="Reference Path"
     )
 
 
-    # Vehicle trajectory
-
-    visualizer.ax.plot(
-        sim.x_history,
-        sim.y_history,
-        color="blue",
-        label="Vehicle Path"
+    plt.plot(
+        simulation.x_history,
+        simulation.y_history,
+        label="MPC Vehicle Path"
     )
 
 
-    visualizer.ax.legend()
+    plt.xlabel("X position")
+    plt.ylabel("Y position")
+
+    plt.axis("equal")
+
+    plt.grid()
+
+    plt.legend()
 
     plt.show()
 
