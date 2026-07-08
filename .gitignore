@@ -1,9 +1,10 @@
 # Python virtual environment
 .venv/
 
-# Python cache
+# Python /cache
 __pycache__/
 *.py[cod]
+*.pyc
 
 # macOS
 .DS_Store
@@ -23,3 +24,8 @@ htmlcov/
 build/
 dist/
 *.egg-info/
+
+# ROS2 build artifacts
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/

@@ -44,7 +44,8 @@ setup(
         'console_scripts': [
 
             'planner_node = vehicle_simulation.planner_node:main',
-
+            'controller_node = vehicle_simulation.controller_node:main',
+            'vehicle_node = vehicle_simulation.vehicle_node:main',
         ],
     },
 )
